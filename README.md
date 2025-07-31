@@ -26,4 +26,4 @@ This repo holds my rough code exercises, micro-projects, and reflections. Not po
 
 ---
 
-*Created by Shailya Gandhi().
+*Created by Shailya Gandhi(https://github.com/Shailya777).
