@@ -1,0 +1,354 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| challengedb        |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| socialdb           |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> use challengedb;
+Database changed
+mysql> select database();
++-------------+
+| database()  |
++-------------+
+| challengedb |
++-------------+
+1 row in set (0.00 sec)
+
+mysql> /* Create a table called product, make sure it has fields such as id,name,price.
+   /*>
+   /*> Declare the id field of the product table as not null.
+   /*>
+   /*> Check if the constrain is actually imposed on the id field.
+   /*>
+   /*> Try adding a null value to the id field and observe what happens.
+   /*>
+   /*> Add a row to the product table, where the id column is not set to null.*/
+mysql>
+mysql> create table products (id int not null, name varchar(30), price int);
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> describe products;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int         | NO   |     | NULL    |       |
+| name  | varchar(30) | YES  |     | NULL    |       |
+| price | int         | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into products values (null, "Laptop", 20000);
+ERROR 1048 (23000): Column 'id' cannot be null
+mysql>
+mysql> insert into products (name, price) values ("Laptop", 20000);
+ERROR 1364 (HY000): Field 'id' doesn't have a default value
+mysql>
+mysql> insert into products values (1, "Laptop", 20000);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into products values (2, "Phone", 2000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from products;
++----+--------+-------+
+| id | name   | price |
++----+--------+-------+
+|  1 | Laptop | 20000 |
+|  2 | Phone  |  2000 |
++----+--------+-------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql> /* In the products table, try adding another product with the id of an already existing product in your table.
+   /*>
+   /*> Think about what problem can be caused by having duplicate ids for the product.
+   /*>
+   /*> Drop the previously created table called product.
+   /*>
+   /*> Re-create the table product, this time set the id field to not null as well as unique so that duplicate entries for id are not allowed.
+   /*>
+   /*> Now try adding a new product with duplicate value for id and observe what happens.*/
+mysql>
+mysql> select * from products;
++----+--------+-------+
+| id | name   | price |
++----+--------+-------+
+|  1 | Laptop | 20000 |
+|  2 | Phone  |  2000 |
++----+--------+-------+
+2 rows in set (0.00 sec)
+
+mysql> insert into products values (1, "Tablet", 5000);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from products;
++----+--------+-------+
+| id | name   | price |
++----+--------+-------+
+|  1 | Laptop | 20000 |
+|  2 | Phone  |  2000 |
+|  1 | Tablet |  5000 |
++----+--------+-------+
+3 rows in set (0.00 sec)
+
+mysql> drop table products;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table products (id int not null unique, name varchar(30), price int);
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> describe products;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int         | NO   | PRI | NULL    |       |
+| name  | varchar(30) | YES  |     | NULL    |       |
+| price | int         | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into products values (1, "Laptop", 20000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into products values (2, "Phone", 2000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into products values (null, "Tablet", 5000);
+ERROR 1048 (23000): Column 'id' cannot be null
+mysql>
+mysql> insert into products(name, price) values ("Tablet", 2000);
+ERROR 1364 (HY000): Field 'id' doesn't have a default value
+mysql>
+mysql> insert into products values (1, "Tablet", 5000);
+ERROR 1062 (23000): Duplicate entry '1' for key 'products.id'
+mysql>
+mysql> insert into products values (3, "Tablet", 5000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from products;
++----+--------+-------+
+| id | name   | price |
++----+--------+-------+
+|  1 | Laptop | 20000 |
+|  2 | Phone  |  2000 |
+|  3 | Tablet |  5000 |
++----+--------+-------+
+3 rows in set (0.00 sec)
+
+mysql>
+mysql> /* Drop the previously created table.
+   /*>
+   /*> Re-create the table and impose a primary key constraint on the products table.
+   /*>
+   /*> Try adding 3 products in our database with a unique value for primary key.
+   /*>
+   /*> Now try adding another product with the id equal to any already assigned id in the product table and observe what happens.*/
+mysql>
+mysql> select * from products;
++----+--------+-------+
+| id | name   | price |
++----+--------+-------+
+|  1 | Laptop | 20000 |
+|  2 | Phone  |  2000 |
+|  3 | Tablet |  5000 |
++----+--------+-------+
+3 rows in set (0.00 sec)
+
+mysql> drop table products;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> create table products (id int primary key, name varchar(30), price int);
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> insert into products values (1, "Laptop", 20000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into products values (2, "Phone", 2000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into products values (3, "Tablet", 5000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into products values (null, "Earbuds", 80);
+ERROR 1048 (23000): Column 'id' cannot be null
+mysql>
+mysql> insert into products (name, price) values ("Earbuds", 80);
+ERROR 1364 (HY000): Field 'id' doesn't have a default value
+mysql>
+mysql> insert into products values (2, "Earbuds", 80);
+ERROR 1062 (23000): Duplicate entry '2' for key 'products.PRIMARY'
+mysql>
+mysql> insert into products values (4, "Earbuds", 80);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select * from products;
++----+---------+-------+
+| id | name    | price |
++----+---------+-------+
+|  1 | Laptop  | 20000 |
+|  2 | Phone   |  2000 |
+|  3 | Tablet  |  5000 |
+|  4 | Earbuds |    80 |
++----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql>
+mysql> /* Drop the previously created product table.
+   /*>
+   /*> Add another field to the table called status which can be set to sold or unsold.
+   /*>
+   /*> Set the by default value of the status column to unsold.
+   /*>
+   /*> Try adding a product without specifying a value for the status column*/
+mysql>
+mysql> drop table products;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table products (id int primary key, name varchar(30), price int, status varchar(20) default "Unsold");
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> describe products;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| id     | int         | NO   | PRI | NULL    |       |
+| name   | varchar(30) | YES  |     | NULL    |       |
+| price  | int         | YES  |     | NULL    |       |
+| status | varchar(20) | YES  |     | Unsold  |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into products values (1, "Laptop", 20000, "Sold");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into products values (2, "Phone", 2000);
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql>
+mysql> insert into products (id, name, price) values (2, "Phone", 2000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from products;
++----+--------+-------+--------+
+| id | name   | price | status |
++----+--------+-------+--------+
+|  1 | Laptop | 20000 | Sold   |
+|  2 | Phone  |  2000 | Unsold |
++----+--------+-------+--------+
+2 rows in set (0.00 sec)
+
+mysql>
+mysql> /* Drop the previously created product table.
+   /*>
+   /*> To the id field of the product add a primary key as well as auto increment constraint.
+   /*>
+   /*> Add a product to the products table.*/
+mysql>
+mysql> drop table products;
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> create table products (id int auto_increment primary key, name varchar(30), price int, status varchar(20) default "Unsold");
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> describe products;
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id     | int         | NO   | PRI | NULL    | auto_increment |
+| name   | varchar(30) | YES  |     | NULL    |                |
+| price  | int         | YES  |     | NULL    |                |
+| status | varchar(20) | YES  |     | Unsold  |                |
++--------+-------------+------+-----+---------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into products values ("Laptop", 20000, "Sold");
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql>
+mysql> insert into products (name, price, status) values ("Laptop", 20000, "Sold");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from products;
++----+--------+-------+--------+
+| id | name   | price | status |
++----+--------+-------+--------+
+|  1 | Laptop | 20000 | Sold   |
++----+--------+-------+--------+
+1 row in set (0.00 sec)
+
+mysql> insert into products (name, price) values ("Phone", 2000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from products;
++----+--------+-------+--------+
+| id | name   | price | status |
++----+--------+-------+--------+
+|  1 | Laptop | 20000 | Sold   |
+|  2 | Phone  |  2000 | Unsold |
++----+--------+-------+--------+
+2 rows in set (0.00 sec)
+
+mysql> insert into products values (20, "Earbuds", 80, "Sold");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from products;
++----+---------+-------+--------+
+| id | name    | price | status |
++----+---------+-------+--------+
+|  1 | Laptop  | 20000 | Sold   |
+|  2 | Phone   |  2000 | Unsold |
+| 20 | Earbuds |    80 | Sold   |
++----+---------+-------+--------+
+3 rows in set (0.00 sec)
+
+mysql> insert into products (name, price, status) values ("Tablet", 5000, "Sold");
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from products;
++----+---------+-------+--------+
+| id | name    | price | status |
++----+---------+-------+--------+
+|  1 | Laptop  | 20000 | Sold   |
+|  2 | Phone   |  2000 | Unsold |
+| 20 | Earbuds |    80 | Sold   |
+| 21 | Tablet  |  5000 | Sold   |
++----+---------+-------+--------+
+4 rows in set (0.00 sec)
+
+mysql> insert into products (id, name, price) values (10, "Earphones", 50);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from products;
++----+-----------+-------+--------+
+| id | name      | price | status |
++----+-----------+-------+--------+
+|  1 | Laptop    | 20000 | Sold   |
+|  2 | Phone     |  2000 | Unsold |
+| 10 | Earphones |    50 | Unsold |
+| 20 | Earbuds   |    80 | Sold   |
+| 21 | Tablet    |  5000 | Sold   |
++----+-----------+-------+--------+
+5 rows in set (0.00 sec)
+
+mysql> insert into products (name, price, status) values ("TV", 10000, "Sold");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from products;
++----+-----------+-------+--------+
+| id | name      | price | status |
++----+-----------+-------+--------+
+|  1 | Laptop    | 20000 | Sold   |
+|  2 | Phone     |  2000 | Unsold |
+| 10 | Earphones |    50 | Unsold |
+| 20 | Earbuds   |    80 | Sold   |
+| 21 | Tablet    |  5000 | Sold   |
+| 22 | TV        | 10000 | Sold   |
++----+-----------+-------+--------+
+6 rows in set (0.00 sec)

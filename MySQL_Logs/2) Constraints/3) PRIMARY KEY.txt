@@ -1,0 +1,60 @@
+mysql> select database();
++------------+
+| database() |
++------------+
+| socialdb   |
++------------+
+1 row in set (0.00 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_socialdb |
++--------------------+
+| customers          |
+| people             |
++--------------------+
+2 rows in set (0.00 sec)
+
+mysql> create table residents (id int primary key, name varchar(30));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> describe residents;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int         | NO   | PRI | NULL    |       |
+| name  | varchar(30) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> insert into residents values (1, "Mike");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into residents values (1, "Jake");
+ERROR 1062 (23000): Duplicate entry '1' for key 'residents.PRIMARY'
+mysql> insert into residents values (2, "Jake");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from residents;
++----+------+
+| id | name |
++----+------+
+|  1 | Mike |
+|  2 | Jake |
++----+------+
+2 rows in set (0.00 sec)
+
+mysql> insert into residents values (3, "John");
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into residents values (null, "Sam");
+ERROR 1048 (23000): Column 'id' cannot be null
+mysql> select * from residents;
++----+------+
+| id | name |
++----+------+
+|  1 | Mike |
+|  2 | Jake |
+|  3 | John |
++----+------+
+3 rows in set (0.00 sec)

@@ -1,0 +1,68 @@
+C:\Windows\System32>mysql -u root -p
+Enter password: **********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 20
+Server version: 8.0.42 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| socialdb           |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> select database(); -- To See Current Database we are in.
++------------+
+| database() |
++------------+
+| NULL       |
++------------+
+1 row in set (0.00 sec)
+
+mysql> use socialdb; -- To Change Current Database to Our Specified Database.
+Database changed
+mysql> select database();
++------------+
+| database() |
++------------+
+| socialdb   |
++------------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> create table people(id int not null, name varchar(30), age int, location varchar(30));
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> show tables; -- To See All The Tables in Current Database.
++--------------------+
+| Tables_in_socialdb |
++--------------------+
+| people             |
++--------------------+
+1 row in set (0.04 sec)
+
+mysql> show columns from people; -- To see Columns from Specified Table.
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| id       | int         | NO   |     | NULL    |       |
+| name     | varchar(30) | YES  |     | NULL    |       |
+| age      | int         | YES  |     | NULL    |       |
+| location | varchar(30) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)

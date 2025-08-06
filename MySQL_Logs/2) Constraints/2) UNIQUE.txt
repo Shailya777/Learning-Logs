@@ -1,0 +1,87 @@
+mysql> select user();
++----------------+
+| user()         |
++----------------+
+| root@localhost |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> select database();
++------------+
+| database() |
++------------+
+| socialdb   |
++------------+
+1 row in set (0.00 sec)
+
+mysql> describe customers;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| id       | int         | YES  |     | NULL    |       |
+| name     | varchar(30) | NO   |     | NULL    |       |
+| location | varchar(50) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> drop table customers;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_socialdb |
++--------------------+
+| people             |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> create table customers (id int, name varchar(30), email varchar(50) unique);
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> describe customers;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| id    | int         | YES  |     | NULL    |       |
+| name  | varchar(30) | YES  |     | NULL    |       |
+| email | varchar(50) | YES  | UNI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into customers values (1, "Mike", "mike@gmail.com");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from customers;
++------+------+----------------+
+| id   | name | email          |
++------+------+----------------+
+|    1 | Mike | mike@gmail.com |
++------+------+----------------+
+1 row in set (0.00 sec)
+
+mysql> insert into customers values (2, "Mike K", "mike@gmail.com");
+ERROR 1062 (23000): Duplicate entry 'mike@gmail.com' for key 'customers.email'
+mysql> insert into customers values (2, "Mike K", "mike_k@gmail.com");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from customers;
++------+--------+------------------+
+| id   | name   | email            |
++------+--------+------------------+
+|    1 | Mike   | mike@gmail.com   |
+|    2 | Mike K | mike_k@gmail.com |
++------+--------+------------------+
+2 rows in set (0.00 sec)
+
+mysql> insert into customers values (3, "Mike", "mike_p@gmail.com");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from customers;
++------+--------+------------------+
+| id   | name   | email            |
++------+--------+------------------+
+|    1 | Mike   | mike@gmail.com   |
+|    2 | Mike K | mike_k@gmail.com |
+|    3 | Mike   | mike_p@gmail.com |
++------+--------+------------------+
+3 rows in set (0.00 sec)

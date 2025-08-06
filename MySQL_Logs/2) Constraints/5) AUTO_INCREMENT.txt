@@ -1,0 +1,54 @@
+mysql> select database();
++------------+
+| database() |
++------------+
+| socialdb   |
++------------+
+1 row in set (0.00 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_socialdb |
++--------------------+
+| customers          |
+| orders             |
+| people             |
+| residents          |
++--------------------+
+4 rows in set (0.01 sec)
+
+mysql> create table bookings (id int auto_increment primary key, name varchar(30), guests int);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> describe bookings;
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id     | int         | NO   | PRI | NULL    | auto_increment |
+| name   | varchar(30) | YES  |     | NULL    |                |
+| guests | int         | YES  |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+3 rows in set (0.01 sec)
+
+mysql> insert into bookings (name, guests) values ("John", 2);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from bookings;
++----+------+--------+
+| id | name | guests |
++----+------+--------+
+|  1 | John |      2 |
++----+------+--------+
+1 row in set (0.00 sec)
+
+mysql> insert into bookings (name, guests) values ("Jake", 2);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from bookings;
++----+------+--------+
+| id | name | guests |
++----+------+--------+
+|  1 | John |      2 |
+|  2 | Jake |      2 |
++----+------+--------+
+2 rows in set (0.00 sec)

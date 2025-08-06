@@ -1,0 +1,159 @@
+C:\Windows\System32>mysql -u root -p
+Enter password: **********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 27
+Server version: 8.0.42 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2025, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> /* Create a database named challengedb, check if the database is created*/
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| socialdb           |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> create database challengedb;
+Query OK, 1 row affected (0.04 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| challengedb        |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| socialdb           |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> use challengedb;
+Database changed
+mysql> select database();
++-------------+
+| database()  |
++-------------+
+| challengedb |
++-------------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> /* Create a database table named "students" with fields as id, firstname, lastname, age, city, & marks.
+   /*>
+   /*> Choose any data type for each column which you feel would be a valid one.
+   /*>
+   /*> Check if the database table is actually created.*/
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> create table students (id int not null, firstname varchar(50), lastname varchar(50), age int, city varchar(50), marks int);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> show tables;
++-----------------------+
+| Tables_in_challengedb |
++-----------------------+
+| students              |
++-----------------------+
+1 row in set (0.00 sec)
+
+mysql> show columns from students;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| id        | int         | NO   |     | NULL    |       |
+| firstname | varchar(50) | YES  |     | NULL    |       |
+| lastname  | varchar(50) | YES  |     | NULL    |       |
+| age       | int         | YES  |     | NULL    |       |
+| city      | varchar(50) | YES  |     | NULL    |       |
+| marks     | int         | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> describe table students;
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------+
+| id | select_type | table    | partitions | type | possible_keys | key  | key_len | ref  | rows | filtered | Extra |
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------+
+|  1 | SIMPLE      | students | NULL       | ALL  | NULL          | NULL | NULL    | NULL |    1 |   100.00 | NULL  |
++----+-------------+----------+------------+------+---------------+------+---------+------+------+----------+-------+
+1 row in set, 1 warning (0.00 sec)
+
+mysql>
+mysql> /* Insert 5 Rows of data into the student table with any data of your choice.*/
+mysql> insert into students values (1, "John", "Smith", 17, "New York", 64);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into students values (2, "Manish", "Pesswani", 17, "Ahmedabad", 86);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into students values (3, "Steven", "King", 20, "London", 76);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into students values (4, "Shailya", "Gandhi", 19, "Mehsana", 85);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into students values (5, "Neena", "Kochar", 21, "Pune", 80);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from students;
++----+-----------+----------+------+-----------+-------+
+| id | firstname | lastname | age  | city      | marks |
++----+-----------+----------+------+-----------+-------+
+|  1 | John      | Smith    |   17 | New York  |    64 |
+|  2 | Manish    | Pesswani |   17 | Ahmedabad |    86 |
+|  3 | Steven    | King     |   20 | London    |    76 |
+|  4 | Shailya   | Gandhi   |   19 | Mehsana   |    85 |
+|  5 | Neena     | Kochar   |   21 | Pune      |    80 |
++----+-----------+----------+------+-----------+-------+
+5 rows in set (0.00 sec)
+
+mysql>
+mysql> /* Display all the students in the student table.
+   /*>
+   /*> Select students from a specific city of your own choice.*/
+mysql>
+mysql> select * from students;
++----+-----------+----------+------+-----------+-------+
+| id | firstname | lastname | age  | city      | marks |
++----+-----------+----------+------+-----------+-------+
+|  1 | John      | Smith    |   17 | New York  |    64 |
+|  2 | Manish    | Pesswani |   17 | Ahmedabad |    86 |
+|  3 | Steven    | King     |   20 | London    |    76 |
+|  4 | Shailya   | Gandhi   |   19 | Mehsana   |    85 |
+|  5 | Neena     | Kochar   |   21 | Pune      |    80 |
++----+-----------+----------+------+-----------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from students where city = "Pune";
++----+-----------+----------+------+------+-------+
+| id | firstname | lastname | age  | city | marks |
++----+-----------+----------+------+------+-------+
+|  5 | Neena     | Kochar   |   21 | Pune |    80 |
++----+-----------+----------+------+------+-------+
+1 row in set (0.00 sec)
+
+mysql> select firstname, lastname, marks from students where city = "Ahmedabad";
++-----------+----------+-------+
+| firstname | lastname | marks |
++-----------+----------+-------+
+| Manish    | Pesswani |    86 |
++-----------+----------+-------+
+1 row in set (0.00 sec)
