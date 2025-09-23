@@ -17,6 +17,8 @@ This repo holds my rough code exercises, micro-projects, and reflections. Not po
 
 - [ ] Finished basics of Python functions, control flow, and OOP practice scripts—including input validation, inheritance, and using classes for the first time.
 - [ ] Built first micro-apps: PhoneBook, Tic-Tac-Toe.
+- [ ] Finished CRUD Operations, Joins, Constraints, Data Grouping, Stored Functions and Procedures, Triggers, Window Functions using MySQL.
+- [ ] Build Expense Tracker CLI Using Python and MySQL.
 
 ## Next Steps
 
